@@ -27,6 +27,8 @@ windos = flip[0:51, 0:51, 1]
 windos = list(np.concatenate(windos))
 plt.imshow(flip[0:51, 0:51, :])
 
+mx = []
+my = []
 for y in range(0, h, 50):
     max = 0
     loc = 0
@@ -40,5 +42,10 @@ for y in range(0, h, 50):
             max = windos.count(0)
     if(max>500):
         cv.rectangle(show_img, (loc, y), (loc+51, y+51), (255,0,0), 2)
-        
+        mx.append(loc+26)
+        my.append(y+26)
+
+for n in np.arange(mx.__len__()-1):
+    cv.line(show_img, (mx[n], my[n]), (mx[n+1], my[n+1]), (0,255,0), 2)
+
 plt.imshow(cv.flip(show_img, -1))
