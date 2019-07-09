@@ -4,8 +4,9 @@ import cv2
 
 class linefollow:
     def __init__(self, path):
-        self.orgimg = cv2.imread(path +".jpg")
+        self.orgimg = cv2.imread(path)
         self.size()
+        self.set_()
 
 
     def size(self):
@@ -25,3 +26,39 @@ class linefollow:
         msksize = round(self.h / 10)
         if msksize % 2 == 0 : msksize += 1
         return cv2.medianBlur(self.otsu(), msksize)
+
+
+    def flip_(self):
+        return cv2.flip(self.median(), -1)
+
+    def set_(self):
+        pass
+
+
+class planA(linefollow):
+    def set_(self):
+        self.msk_w = round(self.w/3)
+        self.msk_h = round(self.h/6)
+        self.flip = self.flip_()
+
+
+    def windows(self):
+        show = cv2.flip(self.orgimg, -1)
+        for y in range(2):
+            loc = 0
+            max = 0
+            for x in range(0, self.w - self.msk_w, round(self.msk_w / 2)):
+                win = self.flip[(y*self.msk_h):(y*self.msk_h)+self.msk_h, x:x+self.msk_w]
+                win = list(np.concatenate(win))
+                if(max < win.count(0)):
+                    max = win.count(0)
+                    loc = x
+            cv2.rectangle(show, (loc, (y*self.msk_h)), (loc+self.msk_w, (y*self.msk_h)+self.msk_h), (255, 0, 0), 5)
+        plt.imshow(cv2.flip(show, -1))
+        
+def main():
+    img = planA("img_06.jpg")
+    img.windows()
+
+if __name__ == '__main__':
+    main()
