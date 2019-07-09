@@ -23,17 +23,18 @@ plt.imshow(median)
 flip = cv.flip(median, -1)
 plt.imshow(flip)
 
+
 windos = flip[0:51, 0:51, 1]
 windos = list(np.concatenate(windos))
-plt.imshow(flip[0:51, 0:51, :])
+plt.imshow(flip[0:100, 0:100, :])
 
 mx = []
 my = []
-for y in range(0, h, 50):
+for y in range(0, h-51, 50):
     max = 0
     loc = 0
     windos_list = []
-    for x in np.arange(0,w,10):
+    for x in np.arange(0,w-51,10):
         windos = flip[y:y+51, x:x+51, 1]
         windos = list(np.concatenate(windos))
         windos_list.append(windos.count(0))
