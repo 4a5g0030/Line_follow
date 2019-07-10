@@ -62,20 +62,12 @@ class planB(linefollow):
         show = cv2.flip(self.orgimg, -1)
         loc = 0
         max = 0
+        x = self.w - self.msk_w
         for y in range(0, self.h - self.msk_h, round(self.msk_h / 2)):
-            win = self.flip[y:y+self.msk_h, 0:0+self.msk_w]
+            win = self.flip[y:y+self.msk_h, x:x+self.msk_w]
             win = list(np.concatenate(win))
             if(max < win.count(0)):
                 max = win.count(0)
                 loc = y
-        cv2.rectangle(show, (0, loc), (0, loc + self.msk_h), (255, 0, 0), 5)
-        plt.imshow(cv2.flip(show, -1))
-
-
-
-def main():
-    img = planB("img02.jpg")
-    img.windows()
-
-if __name__ == '__main__':
-    main()
+        cv2.rectangle(show, (x, loc), (x + self.msk_w , loc + self.msk_h), (255, 0, 0), 5)
+        return cv2.flip(show, -1)
