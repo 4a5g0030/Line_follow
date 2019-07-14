@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 
+
 class linefollow:
     def __init__(self, path):
         self.orgimg = cv2.imread(path)
@@ -31,8 +32,9 @@ class linefollow:
     def flip_(self):
         return cv2.flip(self.median(), -1)
 
+
     def set_(self):
-        self.msk_w = round(self.w/3)
+        self.msk_w = round(self.w/6)
         self.msk_h = round(self.h/6)
         self.flip = self.flip_()
 
