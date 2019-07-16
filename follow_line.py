@@ -46,7 +46,7 @@ class linefollow:
 class planA(linefollow):
     def windows(self):
         show = cv2.flip(self.orgimg, -1)
-        for y in range(2):
+        for y in range(3):
             loc = 0
             max = 0
             for x in range(0, self.w - self.msk_w, round(self.msk_w / 2)):
@@ -55,8 +55,19 @@ class planA(linefollow):
                 if(max < win.count(0)):
                     max = win.count(0)
                     loc = x
-            cv2.rectangle(show, (loc, (y*self.msk_h)), (loc+self.msk_w, (y*self.msk_h)+self.msk_h), (255, 0, 0), 5)
+            self.deaw(show, loc, y)
+            #cv2.rectangle(show, (loc, (y*self.msk_h)), (loc+self.msk_w, (y*self.msk_h)+self.msk_h), (255, 0, 0), 5)
         return cv2.flip(show, -1)
+
+
+    def deaw(self, show, loc, y):
+        center_x = round(loc + (self.msk_w/2))
+        center_y = round((y*self.msk_h) + (self.msk_h/2))
+        center_xx = round(self.w/2)
+        cv2.rectangle(show, (loc, (y*self.msk_h)), (loc+self.msk_w, (y*self.msk_h)+self.msk_h), (255, 0, 0), 5)
+        cv2.circle(show, (center_x ,center_y), 10, (0, 255, 0), -1)
+        cv2.circle(show, (center_xx, center_y), 10, (0, 0, 255), -1)
+        cv2.line(show, (center_x, center_y), (center_xx, center_y), (125, 125, 125), 2)
 
 
 class planB(linefollow):
