@@ -5,3 +5,4 @@
 40s 的影片平均要跑 130s 左右<br> 
 
 ![image](https://github.com/4a5g0030/line_follow/blob/master/conclusion.PNG)
+https://github.com/4a5g0030/line_follow/blob/master/test_data/video/output.avi
